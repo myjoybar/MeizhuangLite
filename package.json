@@ -1,0 +1,49 @@
+{
+  "name": "meizhuanglite",
+  "version": "1.0.0",
+  "description": "Meizhuabg Lite",
+  "main": "router.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myjoybar/MeizhuangLite.git"
+  },
+  "author": "joybar",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-react-html-attrs": "^2.0.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "babelify": "^7.3.0",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.11.1",
+    "material-ui": "^0.17.2",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-responsive": "^1.2.7",
+    "react-router": "^4.0.0",
+    "react-router-dom": "^4.0.0",
+    "react-swipeable-views": "^0.12.1",
+    "react-tap-event-plugin": "^2.0.1",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.3.2",
+    "webpack-dev-server": "^2.4.2",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "file-loader": "^0.11.1",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "bugs": {
+    "url": "https://github.com/myjoybar/MeizhuangLite/issues"
+  },
+  "homepage": "https://github.com/myjoybar/MeizhuangLite#readme"
+}
