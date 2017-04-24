@@ -2,6 +2,8 @@
 >1.  node -v
 >2.  node -v
 
+
+###1. vi ~/.bash_profile
 ###2.  npm 初始化
 >3.  cd /Users/joybar/Documents/WorkSpaces/WebStorm/React-web
 >4. npm init
@@ -36,7 +38,8 @@
 
 
 ###6. 根据配置json安装
->sudo npm install
+>
+
 
 ###7.  npm 安装 router
 >1.  sudo npm install --save react-router
@@ -64,4 +67,15 @@
 >1. webpack.config.js入口文件修改
 >2. package.json 入口文件修改
 >3. index.js export  default
+
+
+###10.  Mysql
+>1. mysql -u root -p   
+>1. CREATE DATABASE `dbmeizuang` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;  
+###11.
+
+>1. [Mac OS X下Maven的安装与配置](http://www.jianshu.com/p/191685a33786)
+>1. [Mac上安装Node和NPM](http://www.jianshu.com/p/20ea93641bda)
+>1. [Mac上安装Mysql](http://www.jianshu.com/p/fd3aae701db9)
+
 

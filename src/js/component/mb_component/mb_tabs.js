@@ -11,6 +11,7 @@ import Slider from 'material-ui/Slider';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import MobileItem from '../sub_mb_component/mb_item';
+import MobileList from './mb_list';
 
 export  default class MobileTabs extends React.Component {
 
@@ -20,56 +21,15 @@ export  default class MobileTabs extends React.Component {
         super(props);
         // 初始状态
         this.state = {
-            value: "1",
-            articles: [],
+            value: "0",
         };
     }
 
     componentWillMount() {
-        this.fetchArticles();
-    }
-
-
-    fetchArticles() {
-        let curThis = this;
-
-        var myFetchOptions = {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
-
-        let url = 'http://localhost:8190/meizhuang/articles';
-        fetch(url, myFetchOptions)
-            .then(function (res) {
-                if (res.status === 200) {
-                    return res.json()
-                } else {
-                    return Promise.reject(res.json())
-                }
-            }).then(function (json) {
-            console.log(json);
-            curThis.setState({articles: json})
-            for (var i = 0; i < json.length; i++) {
-                var title = json[i].title;
-                var content = json[i].content;
-                // do something more...
-                console.log("title=" + title);
-                console.log("content=" + content);
-
-            }
-        }).catch(function (err) {
-            console.log(err);
-        });
 
     }
 
-    handleChange(value) {
 
-        console.log("value=" + value);
-        this.setState({value: value});
-    }
 
     handleTabClick(value) {
         console.log("value=" + value);
@@ -89,44 +49,9 @@ export  default class MobileTabs extends React.Component {
     //     title={newsItem.title}
     //     content={newsItem.content}
     // />
+
+
     render() {
-
-        const articles = this.state.articles;
-        const articleList = articles.length
-            ? articles.map((article, index) => (
-            <div>
-                <MobileItem
-                    author={article.author}
-                    createTimeMillis={article.createTimeMillis}
-                    title={article.title}
-                    content={article.content}
-                />
-            </div>
-        ))
-            : '没有加载到任何新闻';
-
-
-        // <section key={index} className="m_article list-item special_section clearfix">
-        //     <Link to={`details/${newsItem.uniquekey}`}>
-        //         <div className="m_article_img">
-        //             <img src={newsItem.thumbnail_pic_s} alt={newsItem.title} />
-        //         </div>
-        //         <div className="m_article_info">
-        //             <div className="m_article_title">
-        //                 <span>{newsItem.title}</span>
-        //             </div>
-        //             <div className="m_article_desc clearfix">
-        //                 <div className="m_article_desc_l">
-        //                     <span className="m_article_channel">{newsItem.realtype}</span>
-        //                     <span className="m_article_time">{newsItem.date}</span>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </Link>
-        // </section>
-        //
-
-
         return (
             <MuiThemeProvider >
                 <div>
@@ -134,24 +59,26 @@ export  default class MobileTabs extends React.Component {
                         <Tabs
                             value={this.state.value}
                         >
-                            <Tab label="未推荐" value="1"
-                                 onClick={this.handleTabClick.bind(this,"1")}>
+                            <Tab label="未推荐" value="0"
+                                 onClick={this.handleTabClick.bind(this, "0")}>
                                 <div>
-                                    {articleList}
+                                    <MobileList
+                                        recommendStatus={"0"}
+                                    ></MobileList>
                                 </div>
                             </Tab>
-                            <Tab label="已推荐" value="2"
-                                 onClick={this.handleTabClick.bind(this,"2")}>
+                            <Tab label="已推荐" value="1"
+                                 onClick={this.handleTabClick.bind(this, "1")}>
                                 <div>
-                                    {articleList}
+                                    <MobileList
+                                        recommendStatus={"1"}
+                                    ></MobileList>
                                 </div>
                             </Tab>
                         </Tabs>
                     </div>
 
                     <div>
-
-
 
                     </div>
                 </div>
@@ -185,7 +112,6 @@ export  default class MobileTabs extends React.Component {
 //         <FlatButton label="Action2"/>
 //     </CardActions>
 //</Card>
-
 
 
 const styles = {
