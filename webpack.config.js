@@ -40,6 +40,19 @@ module.exports = {
             },{
                 test: /\.(png|jpg)$/,
                 loader: 'url-loader?limit=8192'
+            },
+            // {
+            //     test: /\.less$/,
+            //     loader: 'style-loader!css-loader!less-loader'
+            // },
+            {
+                test: /\.less$/,
+                loaders: [
+                    'style-loader',
+                    'css-loader?-minimize',
+                    'postcss',
+                    'less'
+                ]
             }
 
 

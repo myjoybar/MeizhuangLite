@@ -57,7 +57,7 @@
 >1. sudo npm install redux --save
 
 ###10.  npm 安装 react-touch-loader
->1. sudo npm install react-touch-loader
+>1. sudo npm install react-touch-loader  --save
 
 ###11.  npm 安装 react-touch-loader
 >1. sudo npm i --save react-tap-event-plugin
@@ -67,6 +67,12 @@
 >1. webpack.config.js入口文件修改
 >2. package.json 入口文件修改
 >3. index.js export  default
+
+###10.  添加less
+>1. sudo npm install less -g
+>2. sudo npm install less --save
+>3. sudo npm install less-loader --save
+
 
 
 ###10.  Mysql
