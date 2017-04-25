@@ -44,7 +44,10 @@ export  default class MobileList extends React.Component {
             },
         };
         //let http://localhost:8190/meizhuang/findarticlepagesquery1?page=0&size=10&recommendStatus=0&sortDirection=1
-        let url = "http://localhost:8190/meizhuang/findarticlepagesquery1?page=0&size="+size+"&recommendStatus=" + recommendStatus + "&sortDirection=1";
+
+
+        //let url = "http://localhost:8190/meizhuang/findarticlepagesquery1?page=0&size="+size+"&recommendStatus=" + recommendStatus + "&sortDirection=1";
+        let url = "http://10.88.1.79:8190/meizhuang/findarticlepagesquery1?page=0&size="+size+"&recommendStatus=" + recommendStatus + "&sortDirection=1";
         fetch(url, myFetchOptions)
             .then(function (res) {
                 if (res.status === 200) {
