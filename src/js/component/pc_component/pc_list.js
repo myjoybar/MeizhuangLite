@@ -7,10 +7,18 @@ import ReactDom  from 'react-dom'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Tloader from 'react-touch-loader';
-import MobileItem from '../sub_mb_component/mb_item';
+import PCItem from '../sub_mb_component/pc_item';
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+} from 'material-ui/Table';
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-export  default class MobileList extends React.Component {
+export  default class PCList extends React.Component {
 
     // 构造
     constructor(props) {
@@ -111,7 +119,7 @@ export  default class MobileList extends React.Component {
                     return Promise.reject(res.json())
                 }
             }).then(function (json) {
-             console.log(url);
+            console.log(url);
             // console.log(json);
             let contentList = json.data.content;
             // curThis.setState({articles: contentList});
@@ -149,7 +157,7 @@ export  default class MobileList extends React.Component {
         const articleList = articles.length
             ? articles.map((article, index) => (
             <div>
-                <MobileItem
+                <PCItem
                     author={article.author}
                     createTimeMillis={article.createTimeMillis}
                     title={article.title}
@@ -171,6 +179,13 @@ export  default class MobileList extends React.Component {
                          onLoadMore={this.handleLoadMore.bind(this)}
                          hasMore={hasMore}
                          initializing={initializing}>
+                    <view style={styles.tableDivStyle}>
+                        <view style={styles.tableHeaderStyle}>内容</view>
+                        <view style={styles.tableHeaderStyle}>链接</view>
+                        <view style={styles.tableHeaderStyle}>作者</view>
+                        <view style={styles.tableHeaderStyle}>发布时间</view>
+                        <view style={styles.tableHeaderStyle}>操作</view>
+                    </view>
                     {articleList}
                 </Tloader>
             </div>
@@ -184,6 +199,23 @@ const styles = {
         alignItems: 'center',
         height: 200,
     },
+    tableDivStyle: {
+       // flexDirection: "row-reverse",
+        flexDirection: 'row',
+        backgroundColor: '#aaaaaa',
+        height: 50,
+
+    },
+    tableHeaderStyle: {
+        padding: 15,
+        fontSize: 16,
+        flex: 1,
+        height: 500,
+        color:"#24FD22",
+        textAlign: 'center',
+        
+    }
+
 
 };
 

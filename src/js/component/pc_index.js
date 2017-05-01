@@ -2,9 +2,9 @@
  * Created by joybar on 09/04/2017.
  */
 import React from 'react';
-// import PCHeader from './pc_component/pcHeader';
-// import PCHeaderTest from './pc_component/pcHeaderTest';
-// import PCFooter from './pc_component/pcFooter';
+import PCHeader from './pc_component/pc_header';
+import PCTabs from './pc_component/pc_tabs';
+
 import MobileHeader from './mb_component/mb_header';
 import MobileTabs from './mb_component/mb_tabs';
 // import MBFooter from './mb_component/mbFooter';
@@ -34,32 +34,12 @@ export  default class MobileIndex extends React.Component {
             <MuiThemeProvider>
                 <div>
                     <div>
-                        <MobileHeader
-                            handleToggle={this.handleToggle.bind(this)}>
-                        </MobileHeader>
-                        <MobileTabs>
-                        </MobileTabs>
+                        <PCHeader/>
+                        <PCTabs/>
                     </div>
 
-                    <Drawer
-                        docked={false}
-                        width={200}
-                        open={this.state.open}
-                        onRequestChange={(open) => this.setState({open})}
-                    >
-                        <div>
-                            <MenuItem onClick={this.handleClose.bind(this)}>Menu Item</MenuItem>
-                            <MenuItem onClick={this.handleClose.bind(this)}>Menu Item 2</MenuItem>
-                        </div>
-
-
-                    </Drawer>
                 </div>
             </MuiThemeProvider>
-
-
-
-
 
         );
     }
