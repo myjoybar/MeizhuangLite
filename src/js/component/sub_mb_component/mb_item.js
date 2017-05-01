@@ -19,13 +19,13 @@ export  default class MobileItem extends React.Component {
         // <img src="./src/images/xiana.jpeg"/>
         let  newDate = new Date();
         newDate.setTime(this.props.createTimeMillis);
-        let dateStr = newDate.toLocaleDateString();
+         let dateStr = newDate.toLocaleDateString();
         return (
             <div >
                 <Card>
                     <CardHeader
                         title={'author: '+this.props.author}
-                        subtitle={'createTime: '+dateStr}
+                        subtitle={'createTime: '+this.props.createTimeMillis}
                         avatar="./src/images/avatar.jpg"
                     />
                     <CardMedia

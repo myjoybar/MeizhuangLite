@@ -12,6 +12,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import MobileItem from '../sub_mb_component/mb_item';
 import MobileList from './mb_list';
+import MobileListNoRefresh from './mb_list_no_refresh';
 
 export  default class MobileTabs extends React.Component {
 

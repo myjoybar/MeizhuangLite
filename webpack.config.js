@@ -37,7 +37,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 loader: 'style-loader!css-loader'
-            },{
+            }, {
                 test: /\.(png|jpg)$/,
                 loader: 'url-loader?limit=8192'
             },
@@ -45,15 +45,19 @@ module.exports = {
             //     test: /\.less$/,
             //     loader: 'style-loader!css-loader!less-loader'
             // },
+            // {
+            //     test: /\.less$/,
+            //     loaders: [
+            //         'style-loader',
+            //         'css-loader?-minimize',
+            //         'postcss',
+            //         'less'
+            //     ]
+            // },
             {
                 test: /\.less$/,
-                loaders: [
-                    'style-loader',
-                    'css-loader?-minimize',
-                    'postcss',
-                    'less'
-                ]
-            }
+                loader: 'style-loader!css-loader!less-loader'
+            },
 
 
         ]

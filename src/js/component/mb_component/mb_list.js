@@ -1,20 +1,16 @@
 /**
  * Created by joybar on 09/04/2017.
  */
-import React from 'react';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import Slider from 'material-ui/Slider';
+import React  from 'react'
+import ReactDom  from 'react-dom'
+// import { Router, Route, Switch } from 'react-router'
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import Tloader from 'react-touch-loader';
+import MobileItem from '../sub_mb_component/mb_item';
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import MobileItem from '../sub_mb_component/mb_item';
-// import Tloader from 'react-touch-loader';
 export  default class MobileList extends React.Component {
-
-
 
     // 构造
     constructor(props) {
@@ -22,20 +18,86 @@ export  default class MobileList extends React.Component {
         // 初始状态
         this.state = {
             articles: [],
-            count: 5,
-            hasMore: 0,
+            page: 0,
+            size: 3,
+            getSize: 0,
+            hasMore: false,
+            isFirstLoad: true,
+            isRefresh: false,
             initializing: 1,
-            refreshedAt: Date.now(),
+            refreshedAt: Date.now()
         };
     }
 
-    componentWillMount() {
-        this.fetchArticles(this.props.recommendStatus, 5);
+    handleRefresh(resolve, reject) {
+        console.log("refresh");
+        this.setRefreshState(true);
+        setTimeout(() => {
+            this.setState({
+                page: 0,
+                refreshedAt: Date.now()
+            });
+            this.clearArticles();
+            this.fetchArticles(this.props.recommendStatus, this.state.page);
+            this.setRefreshState(false);
+            resolve();
+        }, 2e3);
+    }
+
+    handleLoadMore(resolve) {
+        console.log("loadMore");
+        setTimeout(() => {
+            this.setState({
+                page: this.state.page + 1,
+            });
+            this.fetchArticles(this.props.recommendStatus, this.state.page);
+            resolve();
+        }, 2e3);
+    }
+
+    clearArticles() {
+        this.setState({
+            articles: [],
+        });
+    }
+
+    setFirstLoadState(isFirstLoad) {
+        this.setState({
+            refresh: isFirstLoad,
+        });
+    }
+
+    setRefreshState(refresh) {
+        this.setState({
+            isRefresh: refresh,
+        });
     }
 
 
+    componentWillMount() {
+        console.log("componentWillMount");
+        this.fetchArticles(this.props.recommendStatus, this.state.page);
+        //  this.handleRefresh();
+    }
 
-    fetchArticles(recommendStatus, size) {
+    componentDidMount() {
+        console.log("componentDidMount");
+        setTimeout(() => {
+            this.setState({
+                initializing: 2, // initialized
+            });
+        }, 2e3);
+
+
+    }
+
+
+    fetchArticles(recommendStatus, page) {
+
+
+        console.log("fetchArticles");
+
+
         let curThis = this;
         var myFetchOptions = {
             method: 'GET',
@@ -44,10 +106,8 @@ export  default class MobileList extends React.Component {
             },
         };
         //let http://localhost:8190/meizhuang/findarticlepagesquery1?page=0&size=10&recommendStatus=0&sortDirection=1
-
-
-        //let url = "http://localhost:8190/meizhuang/findarticlepagesquery1?page=0&size="+size+"&recommendStatus=" + recommendStatus + "&sortDirection=1";
-        let url = "http://10.88.1.79:8190/meizhuang/findarticlepagesquery1?page=0&size="+size+"&recommendStatus=" + recommendStatus + "&sortDirection=1";
+        let url = "http://localhost:8190/meizhuang/findarticlepagesquery1?page=" + page + "&size=" + this.state.size + "&recommendStatus=" + recommendStatus + "&sortDirection=0";
+        // let url = "http://10.88.1.79:8190/meizhuang/findarticlepagesquery1?page=0&size="+size+"&recommendStatus=" + recommendStatus + "&sortDirection=1";
         fetch(url, myFetchOptions)
             .then(function (res) {
                 if (res.status === 200) {
@@ -56,36 +116,40 @@ export  default class MobileList extends React.Component {
                     return Promise.reject(res.json())
                 }
             }).then(function (json) {
-            console.log(json);
-            let contentList = json.content;
-            curThis.setState({articles: contentList})
-            for (var i = 0; i < contentList.length; i++) {
-                var title = contentList[i].title;
-                var content = contentList[i].content;
-                // do something more...
-                console.log("title=" + title);
-                console.log("content=" + content);
-
-            }
-
-
-            // curThis.setState({articles: json})
-            // for (var i = 0; i < json.length; i++) {
-            //     var title = json[i].title;
-            //     var content = json[i].content;
-            //     // do something more...
-            //     console.log("title=" + title);
-            //     console.log("content=" + content);
-            //
-            // }
+             console.log(url);
+            // console.log(json);
+            let contentList = json.data.content;
+            // curThis.setState({articles: contentList});
+            let mergeArticles = curThis.state.articles.concat(contentList);
+            curThis.setState({articles: mergeArticles});
+            curThis.setState({getSize: contentList.length});
+            curThis.setState({hasMore: contentList.length == curThis.state.size});
+            console.log("getSize=" + curThis.state.getSize);
+            console.log("hasMore=" + curThis.state.hasMore);
         }).catch(function (err) {
             console.log(err);
         });
 
     }
 
-    
     render() {
+        console.log("render");
+
+
+        var {hasMore, initializing, refreshedAt} = this.state;
+        var {handleRefresh, handleLoadMore,} = this;//下拉与刷新会有问题
+        const emptyStateUI = this.state.isRefresh
+            ? <div>
+        </div>
+            : <div>
+            <Card style={styles.noDataStyle}>
+                <CardText style={styles.noDataStyle}>
+                    {"没有数据"}
+                </CardText>
+            </Card>
+        </div>;
+
+
         const articles = this.state.articles;
         const articleList = articles.length
             ? articles.map((article, index) => (
@@ -101,84 +165,30 @@ export  default class MobileList extends React.Component {
             </div>
         ))
             : <div>
-            <Card style={styles.noDataStyle}>
-                <CardText style={styles.noDataStyle}>
-                    {"没用数据"}
-                </CardText>
-            </Card>
+            {emptyStateUI}
         </div>;
 
 
-        let {hasMore, initializing, refreshedAt} = this.state;
-
         return (
-            <MuiThemeProvider >
-                <div>
-
-
-
-                        {articleList}
-                </div>
-            </MuiThemeProvider>
+            <div className="view">
+                <Tloader className="main"
+                         onRefresh={this.handleRefresh.bind(this)}
+                         onLoadMore={this.handleLoadMore.bind(this)}
+                         hasMore={hasMore}
+                         initializing={initializing}>
+                    {articleList}
+                </Tloader>
+            </div>
         );
-    }
-// {articleList}
-//
-// <Tloader
-//     initializing={initializing}
-//     onRefresh={this.handleRefresh.bind(this)}
-//     hasMore={hasMore}
-//     onLoadMore={this.handleLoadMore.bind(this)}
-//     className="tloader">
-//     {articleList}
-// </Tloader>
-
-    handleRefresh() {
-
-    }
-
-    handleLoadMore(resolve) {
-        // setTimeout(
-        //     function () {
-        //         var count = this.state.count;
-        //         this.setState({
-        //             count: count + 5,
-        //         });
-        //
-        //         this.fetchArticles(this.props.recommendStatus, this.state.count);
-        //
-        //         this.setState({
-        //             hasMore: count >0 &&count<50,
-        //         });
-        //
-        //         resolve();
-        //
-        //     }, 1000);
-
-    }
-
-
-    componentDidMount() {
-        // setTimeout(
-        //     function () {
-        //         this.setState({
-        //             hasMore: 1,
-        //             initializing: 2,
-        //         });
-        //
-        //     }, 1000);
-
-    }
+    };
 }
 
-//{articleList}
-//autoLoadMore={autoLoadMore}
 const styles = {
     noDataStyle: {
         justifyContent: "center",
         alignItems: 'center',
         height: 200,
-        width: 1800,
+
     },
 
 };

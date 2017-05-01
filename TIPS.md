@@ -56,8 +56,9 @@
 ###9.  npm 安装 Redux
 >1. sudo npm install redux --save
 
-###10.  npm 安装 react-touch-loader
->1. sudo npm install react-touch-loader  --save
+###10.  npm 安装sudo
+>1. npm install react-touch-loader  --save react-touch-loader
+
 
 ###11.  npm 安装 react-touch-loader
 >1. sudo npm i --save react-tap-event-plugin
@@ -72,6 +73,7 @@
 >1. sudo npm install less -g
 >2. sudo npm install less --save
 >3. sudo npm install less-loader --save
+>3. sudo npm install  less-loader less --save
 
 
 
