@@ -55,6 +55,7 @@
 
 ###9.  npm 安装 Redux
 >1. sudo npm install redux --save
+>1. sudo npm install --save react-redux
 
 ###10.  npm 安装sudo
 >1. npm install react-touch-loader  --save react-touch-loader

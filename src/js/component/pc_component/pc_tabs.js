@@ -13,6 +13,7 @@ import FlatButton from 'material-ui/FlatButton';
 import PCList from './pc_list';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import FromDialog from '../sub_mb_component/form_dialog';
 export  default class PCTabs extends React.Component {
 
 
@@ -28,7 +29,6 @@ export  default class PCTabs extends React.Component {
     componentWillMount() {
 
     }
-
 
 
     handleTabClick(value) {
@@ -61,21 +61,30 @@ export  default class PCTabs extends React.Component {
                         >
                             <Tab label="未推荐" value="0"
                                  onClick={this.handleTabClick.bind(this, "0")}>
-                                <div style={styles.contentAddStyle}>
-                                    <FloatingActionButton >
-                                        <ContentAdd />
-                                    </FloatingActionButton>
+                                <div >
+                                    <div class="div-right">
+                                        <FloatingActionButton >
+                                            <ContentAdd />
+                                        </FloatingActionButton>
+                                    </div>
+
+                                    
+
                                     <PCList
                                         recommendStatus={"0"}
                                     ></PCList>
+
+                                   
                                 </div>
                             </Tab>
                             <Tab label="已推荐" value="1"
                                  onClick={this.handleTabClick.bind(this, "1")}>
                                 <div>
-                                    <FloatingActionButton style={styles.contentAddStyle}>
-                                        <ContentAdd />
-                                    </FloatingActionButton>
+                                    <div style={styles.contentAddStyle}>
+                                        <FloatingActionButton >
+                                            <ContentAdd />
+                                        </FloatingActionButton>
+                                    </div>
                                     <PCList
                                         recommendStatus={"1"}
                                     ></PCList>
@@ -95,8 +104,6 @@ export  default class PCTabs extends React.Component {
 }
 
 
-
-
 const styles = {
     headlineStyle: {
         fontSize: 24,
@@ -104,8 +111,10 @@ const styles = {
         marginBottom: 12,
         fontWeight: 400,
     },
-    contentAddStyle:{
-       
+    contentAddStyle: {
+        marginLeft: "auto",
+        marginRight: "2px",
+        width: "300px",
     }
 
 

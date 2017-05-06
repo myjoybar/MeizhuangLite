@@ -9,6 +9,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Tloader from 'react-touch-loader';
 import MobileItem from '../sub_mb_component/mb_item';
 
+import {HEAD_URL} from '../../config/configs'
+
+
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 export  default class MobileList extends React.Component {
 
@@ -101,7 +104,7 @@ export  default class MobileList extends React.Component {
             },
         };
         //let http://localhost:8190/meizhuang/findarticlepagesquery1?page=0&size=10&recommendStatus=0&sortDirection=1
-        let url = "http://localhost:8190/meizhuang/findarticlepagesquery1?page=" + page + "&size=" + this.state.size + "&recommendStatus=" + recommendStatus + "&sortDirection=0";
+        let url = HEAD_URL+"/findarticlepagesquery1?page=" + page + "&size=" + this.state.size + "&recommendStatus=" + recommendStatus + "&sortDirection=0";
         // let url = "http://10.88.1.79:8190/meizhuang/findarticlepagesquery1?page=0&size="+size+"&recommendStatus=" + recommendStatus + "&sortDirection=1";
         fetch(url, myFetchOptions)
             .then(function (res) {

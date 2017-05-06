@@ -7,7 +7,9 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import PCIndex from './component/pc_index';
 import MbIndex from './component/mb_index';
 import MediaQuery from 'react-responsive';
+
 export  default class Rooter extends React.Component {
+
     render() {
         return (
             <div>
