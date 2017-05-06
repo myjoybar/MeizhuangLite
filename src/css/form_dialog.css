@@ -1,0 +1,46 @@
+
+#formDialogAddArticle .lableStle {
+
+    font-size: 1.0rem !important;
+    line-height: 1em;
+    color: deepskyblue;
+    width: 20%;
+
+}
+
+#formDialogAddArticle .input {
+
+    font-size: 1.0rem;
+    line-height: 1em;
+    width: 60%;
+}
+
+#formDialogAddArticle .submit {
+    /*position: relative;*/
+    /*display: inline-block;*/
+    /*background: #D0EEFF;*/
+    /*border: 1px solid #99D3F5;*/
+    /*border-radius: 4px;*/
+    /*padding: 4px 12px;*/
+    /*overflow: hidden;*/
+    /*color: #1E88C7;*/
+    /*text-decoration: none;*/
+    /*text-indent: 0;*/
+    /*line-height: 20px;*/
+
+    width: 100%;
+
+
+}
+
+#formDialogAddArticle .textarea {
+    height: 10em;
+    width: 90%;
+}
+
+#formDialogAddArticle .spanError {
+    color: darkred;
+    margin-left: 1em;
+    font-size: 0.8rem;
+    font-style:italic;
+}
