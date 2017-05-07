@@ -9,13 +9,13 @@ import FlatButton from 'material-ui/FlatButton';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
-import FromDialog from '../sub_mb_component/form_dialog';
+import FromDialog from '../../sub_mb_component/form_dialog';
 
-import {globalStore,} from '../store/store'
+import {globalStore,} from '../../store/store'
 
-import {createActionShowFormDialog, createActionDismissFormDialog} from '../action/actions'
+import {createActionShowFormDialog, createActionDismissFormDialog} from '../../action/actions'
 import {createStore}  from 'redux';
-import reducer  from '../reducer/reducers';
+import reducer  from '../../reducer/reducers';
 
 export  default class PCHeader extends React.Component {
 

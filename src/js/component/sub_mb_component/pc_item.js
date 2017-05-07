@@ -8,6 +8,8 @@ import FlatButton from 'material-ui/FlatButton';
 import Avatar from 'material-ui/Avatar';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import {
     Table,
     TableBody,
@@ -17,8 +19,17 @@ import {
     TableRowColumn,
 } from 'material-ui/Table';
 
-import {HEAD_URL,STATUS_HAS_NOT_RECOMMEND,STATUS_HAS_RECOMMEND,TYPE_CREATE,TYPE_COPY,TYPE_REPRODUCE} from '../../config/configs'
-import {logMsg,log} from '../../utils/consoleUtils'
+import {
+    HEAD_URL,
+    STATUS_HAS_NOT_RECOMMEND,
+    STATUS_HAS_RECOMMEND,
+    TYPE_CREATE,
+    TYPE_COPY,
+    TYPE_REPRODUCE
+} from '../../config/configs'
+import {logMsg, log} from '../../utils/consoleUtils'
+import PCDetails from '../pc_component/pc_admin/pc_detail';
+
 export  default class PCItem extends React.Component {
 
     // 构造
@@ -29,53 +40,54 @@ export  default class PCItem extends React.Component {
     }
 
 
-   handleDelete(){
+    handleDelete(e) {
+        e.stopPropagation();
 
-       let curThis = this;
-       console.log('handleDelete');
-       let formData = new FormData();
-       formData.append("id",curThis.props.id);
-
-
-       fetch(HEAD_URL + "/articleDeleteById", {
-           method: "POST",
-           headers: {
-               // "Content-Type": "application/json",
-               //   'Content-Type': 'application/x-www-form-urlencoded'
-               // 'Content-Type':'multipart/form-data',
-           },
-           mode: "cors",
-           body: formData,
-       }).then(function (res) {
-           if (res.status === 200) {
-               return res.json()
-           } else {
-               return Promise.reject(res.json())
-           }
-       }).then(function (data) {
-           console.log(data);
-           if(data.code==200){
-               log('delete成功');
-               curThis.props.handleReload();
-           }else{
-               log('server 出现异常');
-           }
+        let curThis = this;
+        console.log('handleDelete');
+        let formData = new FormData();
+        formData.append("id", curThis.props.id);
 
 
-       }).catch(function (err) {
-           console.log(err);
-       });
+        fetch(HEAD_URL + "/articleDeleteById", {
+            method: "POST",
+            headers: {
+                // "Content-Type": "application/json",
+                //   'Content-Type': 'application/x-www-form-urlencoded'
+                // 'Content-Type':'multipart/form-data',
+            },
+            mode: "cors",
+            body: formData,
+        }).then(function (res) {
+            if (res.status === 200) {
+                return res.json()
+            } else {
+                return Promise.reject(res.json())
+            }
+        }).then(function (data) {
+            console.log(data);
+            if (data.code == 200) {
+                log('delete成功');
+                curThis.props.handleReload();
+            } else {
+                log('server 出现异常');
+            }
 
-   }
+
+        }).catch(function (err) {
+            console.log(err);
+        });
+
+    }
 
 
-    handleChangeRecommendStaus(recommendStaus){
-
+    handleChangeRecommendStaus(e, recommendStaus) {
+        e.stopPropagation();
         let curThis = this;
         console.log('handleChangeRecommendStaus');
         let formData = new FormData();
-        formData.append("id",curThis.props.id);
-        formData.append("recommendStatus",recommendStaus);
+        formData.append("id", curThis.props.id);
+        formData.append("recommendStatus", recommendStaus);
 
 
         fetch(HEAD_URL + "/article/recommendstatus", {
@@ -95,10 +107,10 @@ export  default class PCItem extends React.Component {
             }
         }).then(function (data) {
             console.log(data);
-            if(data.code==200){
+            if (data.code == 200) {
                 log('更改状态成功');
                 curThis.props.handleReload();
-            }else{
+            } else {
                 log('server 出现异常');
             }
 
@@ -108,10 +120,12 @@ export  default class PCItem extends React.Component {
         });
 
 
-
     }
 
 
+    handleItemClick() {
+        log('handleItemClick');
+    }
 
 
     render() {
@@ -134,62 +148,76 @@ export  default class PCItem extends React.Component {
         let recommendTip = "";
         let recommendStatus = "";
 
-        if(this.props.recommendStatus==STATUS_HAS_NOT_RECOMMEND){
+        if (this.props.recommendStatus == STATUS_HAS_NOT_RECOMMEND) {
             recommendTip = "推荐";
             recommendStatus = STATUS_HAS_RECOMMEND;
-        }else{
+        } else {
             recommendTip = "取消推荐";
             recommendStatus = STATUS_HAS_NOT_RECOMMEND;
 
         }
 
-        
-        
+
         return (
-            <div >
+            <Paper onClick={this.handleItemClick.bind(this)}>
+                <Router>
+                    <div>
+                        <Link to="/detail">
+                            <div id="div_column">
 
-                <div class="div_tail" >
+                                <div class="col_1 vertical_center_150">
+                                    {this.props.id}
+                                </div>
 
-                    <div class="tail1 text-5-overflow-ellipsis">
-                        <p class="spanCreteType"> {typeDes}</p>
-                        <p class="spanTitle"> {this.props.title}</p>
-                        <p class="spanSubTitle"> {this.props.subTitle}</p>
+                                <div class="col_4 text-3-overflow-ellipsis vertical_center_150 ">
+                                    <p class="spanCreteType"> {typeDes}</p>
+                                    <p class="spanTitle"> {this.props.title}</p>
+                                    <p class="spanSubTitle"> {this.props.subTitle}</p>
 
+                                </div>
+
+
+                                <div class="col_3 text-overflow-ellipsis vertical_center_150 ">
+                                    <a target="_blank" href={this.props.fromUrl}> {this.props.fromUrl}</a>
+                                </div>
+
+                                <div class="col_1  text-overflow-ellipsis vertical_center_150">
+                                    {this.props.author}
+                                </div>
+
+                                <div class="col_1 vertical_center_150">
+                                    {dateStr}
+                                </div>
+
+                                <div class="col_2 vertical_center_60">
+                                    <RaisedButton onClick={e => this.handleDelete(e)} label="删除"/>
+                                    <RaisedButton onClick={e => this.handleChangeRecommendStaus(e,recommendStatus)}
+                                                  label={recommendTip}/>
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="clearBoth">
+                                <Divider/>
+                            </div>
+
+                        </Link>
+                        <Route component={PCDetails} path="/detail"/>
                     </div>
 
 
-                    <div class="tail2 text-overflow-ellipsis vertical-center">
-                        <a target="_blank" href= {this.props.fromUrl}> {this.props.fromUrl}</a>
-                    </div>
+                </Router>
 
-                    <div class="tail3 vertical-center text-overflow-ellipsis">
-                        {this.props.author}
-                    </div>
-
-                    <div class="tail4 vertical-center">
-                        {dateStr}
-                    </div>
-
-                    <div class="tail5 vertical-center">
-                        <RaisedButton onClick={this.handleDelete.bind(this)}label="删除"  />
-                        <RaisedButton onClick={this.handleChangeRecommendStaus.bind(this, recommendStatus)} label={recommendTip}  />
-                    </div>
-
-                    <div class="tail6 vertical-center">
-                        {this.props.id}
-                    </div>
-                </div>
-
-
-                <div class="clearBoth">
-                    <Divider/>
-                </div>
-            </div>
+            </Paper>
         );
     }
 
 }
 
+
+// <Route component={ComponentDetail} path="/detail"/>
 // Divider
 
 // //
@@ -229,5 +257,14 @@ const styles = {
         weight: 200,
         height: 200,
     },
+    raisedButton: {
+        height: 20,
+        weight: 20,
+    },
+    columnPadding: {
+        paddingLeft: 10,
+        paddingRight: 10,
+    }
+
 
 };

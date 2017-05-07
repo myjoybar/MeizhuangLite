@@ -2,8 +2,8 @@
  * Created by joybar on 09/04/2017.
  */
 import React from 'react';
-import PCHeader from './pc_component/pc_header';
-import PCTabs from './pc_component/pc_tabs';
+import PCHeader from './pc_component/pc_admin/pc_header';
+import PCTabs from './pc_component/pc_admin/pc_tabs';
 
 import MobileHeader from './mb_component/mb_header';
 import MobileTabs from './mb_component/mb_tabs';

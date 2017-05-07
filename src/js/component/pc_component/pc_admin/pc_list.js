@@ -7,7 +7,7 @@ import ReactDom  from 'react-dom'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Tloader from 'react-touch-loader';
-import PCItem from '../sub_mb_component/pc_item';
+import PCItem from '../../sub_mb_component/pc_item';
 import {
     Table,
     TableBody,
@@ -16,7 +16,7 @@ import {
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table';
-import {HEAD_URL,PC_PAGE_LOAD_SIZE} from '../../config/configs'
+import {HEAD_URL,PC_PAGE_LOAD_SIZE} from '../../../config/configs'
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 export  default class PCList extends React.Component {
@@ -208,25 +208,45 @@ export  default class PCList extends React.Component {
                          initializing={initializing}>
 
 
-                    <div class="nav_divider_p">
+                    <div >
 
-                        <div>内容</div>
-                        <div>链接</div>
-                        <div>作者</div>
-                        <div>发布时间</div>
-                        <div>操作</div>
+                        <div class="col_1 div_column div_column_height">ID</div>
 
+                        <div class="col_4 div_column div_column_height">内容</div>
+                        <div  class="col_3 div_column div_column_height">链接</div>
+                        <div class="col_1 div_column div_column_height">作者</div>
+                        <div class="col_2 div_column div_column_height">发布时间</div>
+                        <div class="col_1 div_column div_column_height">操作</div>
 
                     </div>
 
 
+                    <div class="clearBoth">
+                        {articleList}
+                    </div>
 
-                    {articleList}
+
                 </Tloader>
             </div>
         );
     };
 }
+
+// <div class="nav_divider_p">
+//
+//     <div>内容</div>
+//     <div>链接</div>
+//     <div>作者</div>
+//     <div>发布时间</div>
+//     <div>操作</div>
+//
+//
+// </div>
+
+
+
+
+
 
 // <view style={styles.tableDivStyle}>
 //     <view style={styles.tableHeaderStyle}>内容</view>

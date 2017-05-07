@@ -13,7 +13,7 @@ import FlatButton from 'material-ui/FlatButton';
 import PCList from './pc_list';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import FromDialog from '../sub_mb_component/form_dialog';
+import FromDialog from '../../sub_mb_component/form_dialog';
 export  default class PCTabs extends React.Component {
 
 
