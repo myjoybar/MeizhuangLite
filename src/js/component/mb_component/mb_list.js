@@ -45,7 +45,6 @@ export  default class MobileList extends React.Component {
             resolve();
         }, 2e3);
     }
-
     handleLoadMore(resolve) {
         console.log("loadMore");
         setTimeout(() => {

@@ -32,8 +32,8 @@ export  default class MobileIndex extends React.Component {
     render() {
         return (
             <MuiThemeProvider>
-                <div>
-                    <div>
+                <div  id="pc">
+                    <div class="body-custom">
                         <PCHeader/>
                         <PCTabs/>
                     </div>

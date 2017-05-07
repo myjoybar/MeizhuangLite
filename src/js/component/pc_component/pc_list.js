@@ -16,6 +16,7 @@ import {
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table';
+import {HEAD_URL,PC_PAGE_LOAD_SIZE} from '../../config/configs'
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 export  default class PCList extends React.Component {
@@ -27,7 +28,7 @@ export  default class PCList extends React.Component {
         this.state = {
             articles: [],
             page: 0,
-            size: 3,
+            size: PC_PAGE_LOAD_SIZE,
             hasMore: false,
             isFirstLoad: true,
             isRefresh: false,
@@ -35,6 +36,9 @@ export  default class PCList extends React.Component {
             refreshedAt: Date.now()
         };
     }
+
+
+
 
     handleRefresh(resolve, reject) {
         console.log("refresh");
@@ -50,6 +54,22 @@ export  default class PCList extends React.Component {
             resolve();
         }, 2e3);
     }
+
+
+    handleReload(){
+        console.log("handleReload");
+        this.setRefreshState(true);
+        setTimeout(() => {
+            this.setState({
+                page: 0,
+                refreshedAt: Date.now()
+            });
+            this.clearArticles();
+            this.fetchArticles(this.props.recommendStatus, this.state.page);
+            this.setRefreshState(false);
+        }, 2e3);
+    }
+
 
     handleLoadMore(resolve) {
         console.log("loadMore");
@@ -109,7 +129,7 @@ export  default class PCList extends React.Component {
             },
         };
         //let http://localhost:8190/meizhuang/findarticlepagesquery1?page=0&size=10&recommendStatus=0&sortDirection=1
-        let url = "http://localhost:8190/meizhuang/findarticlepagesquery1?page=" + page + "&size=" + this.state.size + "&recommendStatus=" + recommendStatus + "&sortDirection=0";
+        let url = HEAD_URL+"/findarticlepagesquery1?page=" + page + "&size=" + this.state.size + "&recommendStatus=" + recommendStatus + "&sortDirection=0";
         // let url = "http://10.88.1.79:8190/meizhuang/findarticlepagesquery1?page=0&size="+size+"&recommendStatus=" + recommendStatus + "&sortDirection=1";
         fetch(url, myFetchOptions)
             .then(function (res) {
@@ -164,6 +184,13 @@ export  default class PCList extends React.Component {
                     subTitle={article.subTitle}
                     content={article.content}
                     coverImgUrl={article.coverImgUrl}
+                    type={article.type}
+                    fromUrl={article.fromUrl}
+                    author={article.author}
+                    recommendStatus={article.recommendStatus}
+                    createTimeMillis={article.createTimeMillis}
+                    id={article.id}
+                    handleReload={this.handleReload.bind(this)}
                 />
             </div>
         ))
@@ -179,19 +206,38 @@ export  default class PCList extends React.Component {
                          onLoadMore={this.handleLoadMore.bind(this)}
                          hasMore={hasMore}
                          initializing={initializing}>
-                    <view style={styles.tableDivStyle}>
-                        <view style={styles.tableHeaderStyle}>内容</view>
-                        <view style={styles.tableHeaderStyle}>链接</view>
-                        <view style={styles.tableHeaderStyle}>作者</view>
-                        <view style={styles.tableHeaderStyle}>发布时间</view>
-                        <view style={styles.tableHeaderStyle}>操作</view>
-                    </view>
+
+
+                    <div class="nav_divider_p">
+
+                        <div>内容</div>
+                        <div>链接</div>
+                        <div>作者</div>
+                        <div>发布时间</div>
+                        <div>操作</div>
+
+
+                    </div>
+
+
+
                     {articleList}
                 </Tloader>
             </div>
         );
     };
 }
+
+// <view style={styles.tableDivStyle}>
+//     <view style={styles.tableHeaderStyle}>内容</view>
+//     <view style={styles.tableHeaderStyle}>链接</view>
+//     <view style={styles.tableHeaderStyle}>作者</view>
+//     <view style={styles.tableHeaderStyle}>发布时间</view>
+//     <view style={styles.tableHeaderStyle}>操作</view>
+// </view>
+
+
+
 
 const styles = {
     noDataStyle: {

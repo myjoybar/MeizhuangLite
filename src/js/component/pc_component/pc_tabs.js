@@ -51,6 +51,12 @@ export  default class PCTabs extends React.Component {
     // />
 
 
+//
+// <div class="div-right">
+// <FloatingActionButton >
+// <ContentAdd />
+// </FloatingActionButton>
+// </div>
     render() {
         return (
             <MuiThemeProvider >
@@ -62,29 +68,18 @@ export  default class PCTabs extends React.Component {
                             <Tab label="未推荐" value="0"
                                  onClick={this.handleTabClick.bind(this, "0")}>
                                 <div >
-                                    <div class="div-right">
-                                        <FloatingActionButton >
-                                            <ContentAdd />
-                                        </FloatingActionButton>
-                                    </div>
-
-                                    
 
                                     <PCList
                                         recommendStatus={"0"}
                                     ></PCList>
 
-                                   
+
                                 </div>
                             </Tab>
                             <Tab label="已推荐" value="1"
                                  onClick={this.handleTabClick.bind(this, "1")}>
                                 <div>
-                                    <div style={styles.contentAddStyle}>
-                                        <FloatingActionButton >
-                                            <ContentAdd />
-                                        </FloatingActionButton>
-                                    </div>
+                                  
                                     <PCList
                                         recommendStatus={"1"}
                                     ></PCList>
