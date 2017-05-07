@@ -4,8 +4,8 @@
 
 
 export const DEV_HEAD_URL = 'http://localhost:8190/meizhuang';
-export const RELEASE_HEAD_URL = 'http://localhost:8190/meizhuang';
-export const HEAD_URL = DEV_HEAD_URL;
+export const RELEASE_HEAD_URL = 'http://120.25.193.165:8188/meizhuang';
+export const HEAD_URL = RELEASE_HEAD_URL;
 
 
 export const DEV_MODE = 0;
