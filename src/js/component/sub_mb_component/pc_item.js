@@ -160,9 +160,7 @@ export  default class PCItem extends React.Component {
 
         return (
             <Paper onClick={this.handleItemClick.bind(this)}>
-                <Router>
                     <div>
-                        <Link to="/detail">
                             <div id="div_column">
 
                                 <div class="col_1 vertical_center_150">
@@ -203,12 +201,10 @@ export  default class PCItem extends React.Component {
                                 <Divider/>
                             </div>
 
-                        </Link>
-                        <Route component={PCDetails} path="/detail"/>
+
                     </div>
 
 
-                </Router>
 
             </Paper>
         );
