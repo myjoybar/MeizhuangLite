@@ -9,6 +9,7 @@ import Avatar from 'material-ui/Avatar';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
+import ProgressDialog from '../../component/sub_mb_component/progress_dialog';
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
 
 import {
@@ -37,7 +38,9 @@ export  default class PCItem extends React.Component {
     constructor(props) {
         super(props);
         // 初始状态
-        this.state = {};
+        this.state = {
+            progressDialogIsShow:false
+        };
     }
 
 
@@ -125,6 +128,18 @@ export  default class PCItem extends React.Component {
     }
 
 
+
+
+
+    handleRedirect(e) {
+        e.stopPropagation();//屏蔽冒泡
+        e.preventDefault();//阻止默认事件
+        let curThis = this;
+        console.log('handleRedirect');
+       // window.location.href=this.props.articleItemData.fromUrl;
+        window.open(this.props.articleItemData.fromUrl);
+    }
+
     handleItemClick() {
         log('handleItemClick');
     }
@@ -196,8 +211,11 @@ export  default class PCItem extends React.Component {
 
 
                             <div class="col_3 text-overflow-ellipsis vertical_center_150 ">
-                                <a target="_blank"
-                                   href={this.props.articleItemData.fromUrl}> {this.props.articleItemData.fromUrl}</a>
+
+                                <RaisedButton onClick={e => this.handleRedirect(e)} label={this.props.articleItemData.fromUrl}/>
+
+
+
                             </div>
 
                             <div class="col_1  text-overflow-ellipsis vertical_center_150">
@@ -213,7 +231,11 @@ export  default class PCItem extends React.Component {
                                 <RaisedButton onClick={e => this.handleChangeRecommendStaus(e,recommendStatus)}
                                               label={recommendTip}/>
 
-
+                                <Link to={{
+                            pathname: linkPath,
+                            state: { articleItem: this.props.articleItemData }
+                 }}>
+                                </Link>
                             </div>
 
 
@@ -234,6 +256,12 @@ export  default class PCItem extends React.Component {
     }
 
 }
+
+//原来的url跳转
+
+// <a target="_blank"
+//    href={this.props.articleItemData.fromUrl}> {this.props.articleItemData.fromUrl}</a>
+
 
 //点击router跳转
 //<Link to={/detail/+this.props.id}>

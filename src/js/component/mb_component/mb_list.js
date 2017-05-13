@@ -186,12 +186,7 @@ export  default class MobileList extends React.Component {
             ? articles.map((article, index) => (
             <div>
                 <MobileItem
-                    author={article.author}
-                    createTimeMillis={article.createTimeMillis}
-                    title={article.title}
-                    subTitle={article.subTitle}
-                    content={article.content}
-                    coverImgUrl={article.coverImgUrl}
+                    articleItemData = {article}
                 />
             </div>
         ))

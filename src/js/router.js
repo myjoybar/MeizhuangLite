@@ -6,6 +6,8 @@ import ReactDom  from 'react-dom'
 import {BrowserRouter as Router, Route, Link,Switch} from 'react-router-dom'
 import PCIndex from './component/pc_index';
 import MbIndex from './component/mb_index';
+import MbDetail from './component/mb_component/mb_detail';
+
 import PCDetail from './component/pc_component/pc_admin/pc_detail';
 import MediaQuery from 'react-responsive';
 
@@ -24,7 +26,10 @@ export  default class Rooter extends React.Component {
                 </MediaQuery>
                 <MediaQuery query='(max-device-width: 1224px)'>
                     <Router>
-                        <MbIndex></MbIndex>
+                        <Switch >
+                            <Route exact path="/" component={MbIndex} />
+                            <Route path='/detail/:id' component={MbDetail}/>
+                        </Switch>
                     </Router>
                 </MediaQuery>
 
