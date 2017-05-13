@@ -161,6 +161,22 @@ export  default class PCList extends React.Component {
 
     }
 
+
+//     author={article.author}
+// createTimeMillis={article.createTimeMillis}
+// title={article.title}
+// subTitle={article.subTitle}
+// content={article.content}
+// coverImgUrl={article.coverImgUrl}
+// type={article.type}
+// fromUrl={article.fromUrl}
+// author={article.author}
+// recommendStatus={article.recommendStatus}
+// createTimeMillis={article.createTimeMillis}
+// id={article.id}
+
+
+
     render() {
         console.log("render");
 
@@ -184,18 +200,7 @@ export  default class PCList extends React.Component {
             ? articles.map((article, index) => (
             <div>
                 <PCItem
-                    author={article.author}
-                    createTimeMillis={article.createTimeMillis}
-                    title={article.title}
-                    subTitle={article.subTitle}
-                    content={article.content}
-                    coverImgUrl={article.coverImgUrl}
-                    type={article.type}
-                    fromUrl={article.fromUrl}
-                    author={article.author}
-                    recommendStatus={article.recommendStatus}
-                    createTimeMillis={article.createTimeMillis}
-                    id={article.id}
+                    articleItemData = {article}
                     handleReload={this.handleReload.bind(this)}
                 />
             </div>
