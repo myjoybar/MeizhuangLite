@@ -18,7 +18,7 @@ var inputTypeName = {
 }
 
 
-export  default class ProgressDialog extends React.Component {
+export  default class ProgressBar extends React.Component {
 
 
 
@@ -47,25 +47,9 @@ export  default class ProgressDialog extends React.Component {
 
     render() {
 
-  //  class="transparent"
-
-
         return (
-            <div >
-
-                <Dialog
-
-                    modal={true}
-                    open={this.state.dialogIsShow}
-                    // onRequestClose={this.dismissLoginDialog().bind(this)}
-                    autoScrollBodyContent={true}
-                >
-                    <div class="div-parent-center" >
-                        <CircularProgress class = 'div-child-center'  size={60} thickness={7} />
-
-                    </div>
-
-                </Dialog>
+            <div class="div-parent-center" >
+                    <CircularProgress class = 'div-child-center'  size={60} thickness={7} />
 
             </div>
         );

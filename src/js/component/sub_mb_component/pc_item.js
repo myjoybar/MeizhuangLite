@@ -10,6 +10,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import ProgressDialog from '../../component/sub_mb_component/progress_dialog';
+import ProgressBar from '../../component/sub_mb_component/progress_bar';
+
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
 
 import {
@@ -39,10 +41,18 @@ export  default class PCItem extends React.Component {
         super(props);
         // 初始状态
         this.state = {
-            progressDialogIsShow:false
+            isShowProgressDialog: false
         };
     }
 
+
+    showProgressBarDialog() {
+        this.setState({isShowProgressDialog: true});
+    }
+
+    dismissProgressBarDialog() {
+        this.setState({isShowProgressDialog: false});
+    }
 
     handleDelete(e) {
         e.stopPropagation();//屏蔽冒泡
@@ -51,7 +61,7 @@ export  default class PCItem extends React.Component {
         console.log('handleDelete');
         let formData = new FormData();
         formData.append("id", curThis.props.articleItemData.id);
-
+        curThis.showProgressBarDialog();
 
         fetch(HEAD_URL + "/articleDeleteById", {
             method: "POST",
@@ -94,6 +104,7 @@ export  default class PCItem extends React.Component {
         formData.append("id", curThis.props.articleItemData.id);
         formData.append("recommendStatus", recommendStaus);
 
+        curThis.showProgressBarDialog();
 
         fetch(HEAD_URL + "/article/recommendstatus", {
             method: "POST",
@@ -111,9 +122,12 @@ export  default class PCItem extends React.Component {
                 return Promise.reject(res.json())
             }
         }).then(function (data) {
+           // curThis.dismissProgressBarDialog();
             console.log(data);
+
             if (data.code == 200) {
                 log('更改状态成功');
+
                 curThis.props.handleReload();
             } else {
                 log('server 出现异常');
@@ -122,13 +136,11 @@ export  default class PCItem extends React.Component {
 
         }).catch(function (err) {
             console.log(err);
+           // curThis.dismissProgressBarDialog();
         });
 
 
     }
-
-
-
 
 
     handleRedirect(e) {
@@ -136,7 +148,7 @@ export  default class PCItem extends React.Component {
         e.preventDefault();//阻止默认事件
         let curThis = this;
         console.log('handleRedirect');
-       // window.location.href=this.props.articleItemData.fromUrl;
+        // window.location.href=this.props.articleItemData.fromUrl;
         window.open(this.props.articleItemData.fromUrl);
     }
 
@@ -147,6 +159,13 @@ export  default class PCItem extends React.Component {
 
     render() {
         // <img src="./src/images/xiana.jpeg"/>
+
+
+        const progressDialogUI = this.state.isShowProgressDialog
+            ? (<ProgressDialog/>)
+            : null;
+
+
         let newDate = new Date();
         newDate.setTime(this.props.articleItemData.createTimeMillis);
         let dateStr = newDate.toLocaleDateString();
@@ -184,74 +203,85 @@ export  default class PCItem extends React.Component {
 
         // state: { articleItemData2: this.props.articleItemData ,
         return (
-            <Paper onClick={this.handleItemClick.bind(this)}>
+            <div>
+
+                <div>
+                    <Paper onClick={this.handleItemClick.bind(this)}>
 
 
-                <Link to={{
+                        <Link to={{
                             pathname: linkPath,
                             state: { articleItem: this.props.articleItemData }
                  }}>
 
 
-                    <div>
+                            <div>
 
 
-                        <div id="div_column">
+                                <div id="div_column">
 
-                            <div class="col_1 vertical_center_150">
-                                {this.props.articleItemData.id}
-                            </div>
+                                    <div class="col_1 vertical_center_150">
+                                        {this.props.articleItemData.id}
+                                    </div>
 
-                            <div class="col_4 text-3-overflow-ellipsis vertical_center_150 ">
-                                <p class="spanCreteType"> {typeDes}</p>
-                                <p class="spanTitle"> {this.props.articleItemData.title}</p>
-                                <p class="spanSubTitle"> {this.props.articleItemData.subTitle}</p>
+                                    <div class="col_4 text-3-overflow-ellipsis vertical_center_150 ">
+                                        <p class="spanCreteType"> {typeDes}</p>
+                                        <p class="spanTitle"> {this.props.articleItemData.title}</p>
+                                        <p class="spanSubTitle"> {this.props.articleItemData.subTitle}</p>
 
-                            </div>
-
-
-                            <div class="col_3 text-overflow-ellipsis vertical_center_150 ">
-
-                                <RaisedButton onClick={e => this.handleRedirect(e)} label={this.props.articleItemData.fromUrl}/>
+                                    </div>
 
 
+                                    <div class="col_3 text-overflow-ellipsis vertical_center_150 ">
 
-                            </div>
+                                        <RaisedButton onClick={e => this.handleRedirect(e)}
+                                                      label={this.props.articleItemData.fromUrl}/>
 
-                            <div class="col_1  text-overflow-ellipsis vertical_center_150">
-                                {this.props.articleItemData.author}
-                            </div>
 
-                            <div class="col_1 vertical_center_150">
-                                {dateStr}
-                            </div>
+                                    </div>
 
-                            <div class="col_2 vertical_center_60">
-                                <RaisedButton onClick={e => this.handleDelete(e)} label="删除"/>
-                                <RaisedButton onClick={e => this.handleChangeRecommendStaus(e,recommendStatus)}
-                                              label={recommendTip}/>
+                                    <div class="col_1  text-overflow-ellipsis vertical_center_150">
+                                        {this.props.articleItemData.author}
+                                    </div>
 
-                                <Link to={{
+                                    <div class="col_1 vertical_center_150">
+                                        {dateStr}
+                                    </div>
+
+                                    <div class="col_2 vertical_center_60">
+                                        <RaisedButton onClick={e => this.handleDelete(e)} label="删除"/>
+                                        <RaisedButton onClick={e => this.handleChangeRecommendStaus(e,recommendStatus)}
+                                                      label={recommendTip}/>
+
+                                        <Link to={{
                             pathname: linkPath,
                             state: { articleItem: this.props.articleItemData }
                  }}>
-                                </Link>
+                                        </Link>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="clearBoth">
+                                    <Divider/>
+                                </div>
+
+
                             </div>
 
+                        </Link>
 
-                        </div>
+                    </Paper>
 
-
-                        <div class="clearBoth">
-                            <Divider/>
-                        </div>
+                </div>
 
 
-                    </div>
-
-                </Link>
-
-            </Paper>
+                <div>
+                    {progressDialogUI}
+                </div>
+            </div>
         );
     }
 
