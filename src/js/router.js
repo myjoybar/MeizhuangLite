@@ -14,21 +14,28 @@ import MediaQuery from 'react-responsive';
 export  default class Rooter extends React.Component {
 
     render() {
+
         return (
             <div>
+
                 <MediaQuery query='(min-device-width: 1224px)'>
-                    <Router>
+                    <Router >
                         <Switch >
-                            <Route exact path="/" component={PCIndex} /> 
-                            <Route path='/detail/:id' component={PCDetail}/>
+                            <Route component={PCIndex}  exact path="/"  > </Route>
+                            <Route component={PCDetail}  path='/detail/:id' />
                         </Switch>
                     </Router>
+
+
+
+
+
                 </MediaQuery>
                 <MediaQuery query='(max-device-width: 1224px)'>
                     <Router>
                         <Switch >
-                            <Route exact path="/" component={MbIndex} />
-                            <Route path='/detail/:id' component={MbDetail}/>
+                            <Route  component={MbIndex} exact path="/" />
+                            <Route component={MbDetail} path='/detail/:id' />
                         </Switch>
                     </Router>
                 </MediaQuery>

@@ -78,10 +78,14 @@
 
 
 
-###10.  Mysql
+###11.  Mysql
 >1. mysql -u root -p   
 >1. CREATE DATABASE `dbmeizuang` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;  
-###11.
+
+
+###12. 安装Webpack压缩插件
+>1. sudo  npm install compression-webpack-plugin --save
+>1. sudo  npm install compression-webpack-plugin --save-dev
 
 >1. [Mac OS X下Maven的安装与配置](http://www.jianshu.com/p/191685a33786)
 >1. [Mac上安装Node和NPM](http://www.jianshu.com/p/20ea93641bda)

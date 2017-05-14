@@ -3,7 +3,7 @@
  */
 // config/webpack.config.js
 const webpack = require('webpack');
-
+//var CompressionPlugin = require('compression-webpack-plugin');
 // 配置目录
 // 因为我们的webpack.config.js文件不在项目根目录下，所以需要一个路径的配置
 const path = require('path');
@@ -16,12 +16,13 @@ const BUILD_PATH = path.join(CURRENT_PATH, 'src'); // 最后输出放置公共�
 
 module.exports = {
     context: __dirname + '/src',
-    entry: {
-        //index: './js/index.js',
-        index: './js/router.js',
-    },
+    // entry: {
+    //     //index: './js/index.js',
+    //     index: './js/router.js',
+    // },
 
-   // entry: ['webpack/hot/dev-server', path.resolve(context, './js/router.js')],
+
+    entry: ['webpack/hot/dev-server', path.resolve(context, './js/router.js')],
     watch: true,
     module: {
         loaders: [
@@ -76,6 +77,22 @@ module.exports = {
 
     plugins: [
         // 插件扔在这里
-       
-    ]
+        //http://www.qingpingshan.com/jb/javascript/175812.html
+        // new webpack.DefinePlugin({
+        //     'process.env': {
+        //         'NODE_ENV': JSON.stringify('production')
+        //     }
+        // }),
+        // new webpack.optimize.DedupePlugin(),
+        // new webpack.optimize.UglifyJsPlugin(),
+        // new webpack.optimize.AggressiveMergingPlugin(),
+        // new CompressionPlugin({
+        //     asset: "[path].gz[query]",
+        //     algorithm: "gzip",
+        //     test: /\.js$|\.css$|\.html$/,
+        //     threshold: 10240,
+        //     minRatio: 0.8
+        // })
+    ],
+
 }
