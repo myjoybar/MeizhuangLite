@@ -9,7 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Tloader from 'react-touch-loader';
 import MobileItem from '../sub_mb_component/mb_item';
 
-import {HEAD_URL} from '../../config/configs'
+import {HEAD_URL,MB_PAGE_LOAD_SIZE} from '../../config/configs'
 
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -22,7 +22,7 @@ export  default class MobileList extends React.Component {
         this.state = {
             articles: [],
             page: 0,
-            size: 3,
+            size: MB_PAGE_LOAD_SIZE,
             hasMore: false,
             isFirstLoad: true,
             isRefresh: false,
