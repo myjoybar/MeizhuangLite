@@ -10,6 +10,20 @@
     margin: 0px auto 0px auto;
 }
 
+.div-parent-center {
+    text-align: center;
+}
+
+.div-child-center {
+    display: inline-block;
+}
+
+.transparent {
+    background-color: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
 .clearBoth {
     clear: both
 }
@@ -25,7 +39,6 @@
     vertical-align: middle;
     line-height: 60px;
 }
-
 
 .col_1 {
     float: left;
@@ -44,11 +57,13 @@
     width: 25%;
     text-align: center;
 }
+
 .col_4 {
     float: left;
     width: 33.3333%;
     text-align: center;
 }
+
 .col_5 {
     float: left;
     width: 41.66666%;
@@ -60,31 +75,37 @@
     width: 50%;
     text-align: center;
 }
+
 .col_7 {
     float: left;
     width: 58.3333%;
     text-align: center;
 }
+
 .col_8 {
     float: left;
     width: 66.66666%;
     text-align: center;
 }
+
 .col_9 {
     float: left;
     width: 75%;
     text-align: center;
 }
+
 .col_10 {
     float: left;
     width: 83.3333%;
     text-align: center;
 }
+
 .col_11 {
     float: left;
     width: 91.66666%;
     text-align: center;
 }
+
 .col_12 {
     float: left;
     width: 100%;

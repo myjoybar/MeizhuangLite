@@ -6,7 +6,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import Divider from 'material-ui/Divider';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-export  default class PCDetail extends React.Component {
+export  default class MbDetail extends React.Component {
 
     // 构造
     constructor(props) {

@@ -13,7 +13,10 @@ import {HEAD_URL,MB_PAGE_LOAD_SIZE} from '../../config/configs'
 
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+var offsetTopHeight = 0;
 export  default class MobileList extends React.Component {
+
+
 
     // 构造
     constructor(props) {
@@ -31,22 +34,39 @@ export  default class MobileList extends React.Component {
         };
     }
 
+
     handleRefresh(resolve, reject) {
         console.log("refresh");
-        this.setRefreshState(true);
-        setTimeout(() => {
-            this.setState({
-                page: 0,
-                refreshedAt: Date.now()
-            });
-            this.clearArticles();
-            this.fetchArticles(this.props.recommendStatus, this.state.page);
-            this.setRefreshState(false);
-            resolve();
-        }, 2e3);
+        console.log("offsetTopHeight=" + offsetTopHeight);
+        if (offsetTopHeight > 5) {
+            setTimeout(() => {
+                resolve();
+            }, 2e3);
+
+        } else {
+            this.setRefreshState(true);
+            setTimeout(() => {
+                this.setState({
+                    page: 0,
+                    refreshedAt: Date.now()
+                });
+                this.clearArticles();
+                this.fetchArticles(this.props.recommendStatus, this.state.page);
+                this.setRefreshState(false);
+                resolve();
+            }, 2e3);
+        }
+
+
     }
+
     handleLoadMore(resolve) {
         console.log("loadMore");
+
+        let screenToTopHeight = window.screenTop;
+        console.log(" window.screenTop=" + screenToTopHeight);
+
+
         setTimeout(() => {
             this.setState({
                 page: this.state.page + 1,
@@ -75,6 +95,11 @@ export  default class MobileList extends React.Component {
     }
 
 
+    handleScroll(e) {
+        // console.log('浏览器滚动事件'+  e.pageX);
+    }
+
+
     componentWillMount() {
         console.log("componentWillMount");
         this.fetchArticles(this.props.recommendStatus, this.state.page);
@@ -88,6 +113,15 @@ export  default class MobileList extends React.Component {
                 initializing: 2, // initialized
             });
         }, 2e3);
+
+        window.addEventListener('scroll', this.handleScroll.bind(this));
+
+        window.addEventListener('scroll', function () {
+            var obj = document.getElementById('refresh_view');
+            offsetTopHeight = -(obj.offsetTop - document.body.scrollTop)
+            console.log("offsetTopHeight=" + offsetTopHeight);
+
+        })
 
 
     }
@@ -103,7 +137,7 @@ export  default class MobileList extends React.Component {
             },
         };
         //let http://localhost:8190/meizhuang/findarticlepagesquery1?page=0&size=10&recommendStatus=0&sortDirection=1
-        let url = HEAD_URL+"/findarticlepagesquery1?page=" + page + "&size=" + this.state.size + "&recommendStatus=" + recommendStatus + "&sortDirection=0";
+        let url = HEAD_URL + "/findarticlepagesquery1?page=" + page + "&size=" + this.state.size + "&recommendStatus=" + recommendStatus + "&sortDirection=0";
         // let url = "http://10.88.1.79:8190/meizhuang/findarticlepagesquery1?page=0&size="+size+"&recommendStatus=" + recommendStatus + "&sortDirection=1";
         fetch(url, myFetchOptions)
             .then(function (res) {
@@ -113,7 +147,7 @@ export  default class MobileList extends React.Component {
                     return Promise.reject(res.json())
                 }
             }).then(function (json) {
-             console.log(url);
+            console.log(url);
             // console.log(json);
             let contentList = json.data.content;
             // curThis.setState({articles: contentList});
@@ -152,12 +186,7 @@ export  default class MobileList extends React.Component {
             ? articles.map((article, index) => (
             <div>
                 <MobileItem
-                    author={article.author}
-                    createTimeMillis={article.createTimeMillis}
-                    title={article.title}
-                    subTitle={article.subTitle}
-                    content={article.content}
-                    coverImgUrl={article.coverImgUrl}
+                    articleItemData = {article}
                 />
             </div>
         ))
@@ -167,7 +196,7 @@ export  default class MobileList extends React.Component {
 
 
         return (
-            <div className="view">
+            <div className="view" id="refresh_view">
                 <Tloader className="main"
                          onRefresh={this.handleRefresh.bind(this)}
                          onLoadMore={this.handleLoadMore.bind(this)}

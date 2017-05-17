@@ -16,7 +16,7 @@ import {
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table';
-import {HEAD_URL,PC_PAGE_LOAD_SIZE} from '../../../config/configs'
+import {HEAD_URL, PC_PAGE_LOAD_SIZE} from '../../../config/configs'
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 export  default class PCList extends React.Component {
@@ -38,10 +38,14 @@ export  default class PCList extends React.Component {
     }
 
 
-
-
     handleRefresh(resolve, reject) {
         console.log("refresh");
+        // let screenToTopHeight = window.screenTop;
+        // console.log(" window.screenTop="+ screenToTopHeight);
+        // if (screenToTopHeight < 50) {
+        //     return;
+        // }
+
         this.setRefreshState(true);
         setTimeout(() => {
             this.setState({
@@ -56,7 +60,7 @@ export  default class PCList extends React.Component {
     }
 
 
-    handleReload(){
+    handleReload() {
         console.log("handleReload");
         this.setRefreshState(true);
         setTimeout(() => {
@@ -73,6 +77,8 @@ export  default class PCList extends React.Component {
 
     handleLoadMore(resolve) {
         console.log("loadMore");
+
+
         setTimeout(() => {
             this.setState({
                 page: this.state.page + 1,
@@ -129,7 +135,7 @@ export  default class PCList extends React.Component {
             },
         };
         //let http://localhost:8190/meizhuang/findarticlepagesquery1?page=0&size=10&recommendStatus=0&sortDirection=1
-        let url = HEAD_URL+"/findarticlepagesquery1?page=" + page + "&size=" + this.state.size + "&recommendStatus=" + recommendStatus + "&sortDirection=0";
+        let url = HEAD_URL + "/findarticlepagesquery1?page=" + page + "&size=" + this.state.size + "&recommendStatus=" + recommendStatus + "&sortDirection=0";
         // let url = "http://10.88.1.79:8190/meizhuang/findarticlepagesquery1?page=0&size="+size+"&recommendStatus=" + recommendStatus + "&sortDirection=1";
         fetch(url, myFetchOptions)
             .then(function (res) {
@@ -155,6 +161,22 @@ export  default class PCList extends React.Component {
 
     }
 
+
+//     author={article.author}
+// createTimeMillis={article.createTimeMillis}
+// title={article.title}
+// subTitle={article.subTitle}
+// content={article.content}
+// coverImgUrl={article.coverImgUrl}
+// type={article.type}
+// fromUrl={article.fromUrl}
+// author={article.author}
+// recommendStatus={article.recommendStatus}
+// createTimeMillis={article.createTimeMillis}
+// id={article.id}
+
+
+
     render() {
         console.log("render");
 
@@ -178,18 +200,7 @@ export  default class PCList extends React.Component {
             ? articles.map((article, index) => (
             <div>
                 <PCItem
-                    author={article.author}
-                    createTimeMillis={article.createTimeMillis}
-                    title={article.title}
-                    subTitle={article.subTitle}
-                    content={article.content}
-                    coverImgUrl={article.coverImgUrl}
-                    type={article.type}
-                    fromUrl={article.fromUrl}
-                    author={article.author}
-                    recommendStatus={article.recommendStatus}
-                    createTimeMillis={article.createTimeMillis}
-                    id={article.id}
+                    articleItemData = {article}
                     handleReload={this.handleReload.bind(this)}
                 />
             </div>
@@ -212,8 +223,8 @@ export  default class PCList extends React.Component {
 
                         <div class="col_1 div_column div_column_height">ID</div>
 
-                        <div class="col_4 div_column div_column_height">内容</div>
-                        <div  class="col_3 div_column div_column_height">链接</div>
+                        <div class="col_4 div_column div_column_height">标题摘要</div>
+                        <div class="col_3 div_column div_column_height">链接</div>
                         <div class="col_1 div_column div_column_height">作者</div>
                         <div class="col_2 div_column div_column_height">发布时间</div>
                         <div class="col_1 div_column div_column_height">操作</div>
@@ -244,10 +255,6 @@ export  default class PCList extends React.Component {
 // </div>
 
 
-
-
-
-
 // <view style={styles.tableDivStyle}>
 //     <view style={styles.tableHeaderStyle}>内容</view>
 //     <view style={styles.tableHeaderStyle}>链接</view>
@@ -257,8 +264,6 @@ export  default class PCList extends React.Component {
 // </view>
 
 
-
-
 const styles = {
     noDataStyle: {
         justifyContent: "center",
@@ -266,7 +271,7 @@ const styles = {
         height: 200,
     },
     tableDivStyle: {
-       // flexDirection: "row-reverse",
+        // flexDirection: "row-reverse",
         flexDirection: 'row',
         backgroundColor: '#aaaaaa',
         height: 50,
@@ -277,9 +282,10 @@ const styles = {
         fontSize: 16,
         flex: 1,
         height: 500,
-        color:"#24FD22",
+        color: "#24FD22",
         textAlign: 'center',
-        
+
+
     }
 
 

@@ -14,7 +14,7 @@ export const globalStore = configureStore();
 export  function configureStore() {
 
     if (store == null) {
-        console.log("formDialogVisibility == null")
+      //  console.log("formDialogVisibility == null")
         store = createStore(reducer);
     }else{
         console.log("formDialogVisibility != null")

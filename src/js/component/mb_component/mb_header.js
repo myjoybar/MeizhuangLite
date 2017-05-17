@@ -27,6 +27,7 @@ export  default class MobileHeader extends React.Component {
                                 onTitleTouchTap={this.handleTouchTap.bind(this)}
                             />
 
+
                         </div>
                     </MuiThemeProvider>
                 </header>

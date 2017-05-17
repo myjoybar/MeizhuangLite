@@ -9,6 +9,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import MbDrawerMenu from './mb_component/mb_drawer_menu';
+
+
 export  default class MbIndex extends React.Component {
 
     // 构造
@@ -34,7 +37,7 @@ export  default class MbIndex extends React.Component {
                     <div>
                         <MobileHeader
                             handleToggle={this.handleToggle.bind(this)}>
-                            </MobileHeader>
+                        </MobileHeader>
                         <MobileTabs>
                         </MobileTabs>
                     </div>
@@ -45,9 +48,11 @@ export  default class MbIndex extends React.Component {
                         open={this.state.open}
                         onRequestChange={(open) => this.setState({open})}
                     >
+
                         <div>
-                            <MenuItem onClick={this.handleClose.bind(this)}>Menu Item</MenuItem>
-                            <MenuItem onClick={this.handleClose.bind(this)}>Menu Item 2</MenuItem>
+                            <MbDrawerMenu
+                                handleClose={this.handleClose.bind(this)}>
+                            </MbDrawerMenu>
                         </div>
 
 
@@ -69,4 +74,10 @@ export  default class MbIndex extends React.Component {
 // label="Open Drawer"
 // onClick={this.handleToggle.bind(this)}
 // />
+}
+
+const styles = {
+    mbDrawerMenu: {
+        backgroundColor: '#80DEEA',
+    },
 }

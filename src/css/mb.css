@@ -1,0 +1,15 @@
+
+#mb_drawer .mb_drawer_user {
+   background-color: #00ACC1 ;
+ color: #a3be8c;
+    height: 100%;
+    overflow:hidden;
+
+}
+
+#mb_drawer .mb_drawer_user_name {
+    color: #343434;
+    font-size: 20px;
+}
+
+

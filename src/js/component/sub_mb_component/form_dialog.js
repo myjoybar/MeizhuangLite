@@ -6,6 +6,8 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import {HEAD_URL} from '../../config/configs'
 import Snackbar from 'material-ui/Snackbar';
+import ProgressDialog from './progress_dialog';
+import ProgressBar from './progress_bar';
 
 var inputTypeName = {
     title: 'title',
@@ -27,7 +29,8 @@ export  default class FromDialog extends React.Component {
         super(props);
         // 初始状态
         this.state = {
-            dialogIsShow: true,
+            thisFromdialogIsShow: true,
+            isShowProgressDialog: false,
             snackBarShow: false,
             form: {
                 title: {
@@ -72,6 +75,16 @@ export  default class FromDialog extends React.Component {
 
     }
 
+
+    showProgressBarDialog() {
+        this.setState({isShowProgressDialog: true});
+    }
+
+    dismissProgressBarDialog() {
+        this.setState({isShowProgressDialog: false});
+    }
+
+
     showSnackBar() {
         this.setState({snackBarShow: true});
         // this.setLoginDialogStatus(true);
@@ -103,17 +116,16 @@ export  default class FromDialog extends React.Component {
         console.log('fromUrl:' + fromUrl.value);
 
 
-
         let formData = new FormData();
-        formData.append("creatorId",1);
-        formData.append("title",title.value);
-        formData.append("subTitle",subTitle.value);
-        formData.append("coverImgUrl",coverImgUrl.value);
-        formData.append("content",content.value);
-        formData.append("author",author.value);
-        formData.append("fromUrl",fromUrl.value);
-        formData.append("type",0);
-        formData.append("recommendStatus",0);
+        formData.append("creatorId", 1);
+        formData.append("title", title.value);
+        formData.append("subTitle", subTitle.value);
+        formData.append("coverImgUrl", coverImgUrl.value);
+        formData.append("content", content.value);
+        formData.append("author", author.value);
+        formData.append("fromUrl", fromUrl.value);
+        formData.append("type", 0);
+        formData.append("recommendStatus", 0);
 
 
         // formData.append("creatorId",1);
@@ -130,6 +142,9 @@ export  default class FromDialog extends React.Component {
         // formData.append("creatorId", 1 + "");
         // formData.append("title", "哈哈哈");
         let params2 = "creatorId=1&title=哈哈哈";
+
+        this.showProgressBarDialog();
+
         fetch(HEAD_URL + "/addArticle", {
             //  fetch(HEAD_URL + "/postceshi", {
             method: "POST",
@@ -148,16 +163,19 @@ export  default class FromDialog extends React.Component {
                 return Promise.reject(res.json())
             }
         }).then(function (data) {
+            curThis.dismissProgressBarDialog();
             console.log(data);
-            if(data.code==200){
+            if (data.code == 200) {
                 console.log('成功');
                 curThis.props.dismissFormDialog();
-            }else{
+            } else {
                 console.log('server 出现异常');
+
             }
 
 
         }).catch(function (err) {
+            curThis.dismissProgressBarDialog();
             console.log(err);
         });
 
@@ -313,6 +331,11 @@ export  default class FromDialog extends React.Component {
     render() {
 
 
+        const progressDialogUI = this.state.isShowProgressDialog
+            ? (<ProgressDialog/>)
+            : null;
+
+
         const actions = [
             <FlatButton
                 label="Cancel"
@@ -334,90 +357,101 @@ export  default class FromDialog extends React.Component {
         return (
             <div >
 
-                <Dialog
-                    title="Add an article"
-                    actions={actions}
-                    modal={false}
-                    open={this.state.dialogIsShow}
-                    // onRequestClose={this.dismissLoginDialog().bind(this)}
-                    autoScrollBodyContent={true}
-                >
+                <div>
+                    <Dialog
+                        title="Add an article"
+                        actions={actions}
+                        modal={false}
+                        open={this.state.thisFromdialogIsShow}
+                        // onRequestClose={this.dismissLoginDialog().bind(this)}
+                        autoScrollBodyContent={true}
+                    >
 
-                    <div id="formDialogAddArticle">
+                        <div id="formDialogAddArticle">
 
-                        <form onSubmit={(e) => this.handleSubmit(e)}>
-                            <br/>
-                            <label class="lableStle">title：</label>
-                            <input class="input"
-                                   type="text"
-                                   value={title.value}
-                                   onChange={(e) => this.handleValueChange(inputTypeName.title, e.target.value)}
-                            />
-                            {!title.valid && <span class="spanError">{title.error}</span>}
-                            <br/>
-                            <br/>
+                            <form onSubmit={(e) => this.handleSubmit(e)}>
+                                <br/>
+                                <label class="lableStle">title：</label>
+                                <input class="input"
+                                       type="text"
+                                       value={title.value}
+                                       onChange={(e) => this.handleValueChange(inputTypeName.title, e.target.value)}
+                                />
+                                {!title.valid && <span class="spanError">{title.error}</span>}
+                                <br/>
+                                <br/>
 
-                            <label class="lableStle">subTitle：</label>
-                            <input
-                                class="input"
-                                type="text"
-                                value={subTitle.value}
-                                onChange={(e) => this.handleValueChange(inputTypeName.subTitle, e.target.value)}
-                            />
-                            {!subTitle.valid && <span class="spanError">{subTitle.error}</span>}
-                            <br/>
-                            <br/>
+                                <label class="lableStle">subTitle：</label>
+                                <input
+                                    class="input"
+                                    type="text"
+                                    value={subTitle.value}
+                                    onChange={(e) => this.handleValueChange(inputTypeName.subTitle, e.target.value)}
+                                />
+                                {!subTitle.valid && <span class="spanError">{subTitle.error}</span>}
+                                <br/>
+                                <br/>
 
-                            <label class="lableStle">coverImgUrl：</label>
-                            <input
-                                class="input"
-                                type="text"
-                                value={coverImgUrl.value}
-                                onChange={(e) => this.handleValueChange(inputTypeName.coverImgUrl, e.target.value)}
-                            />
-                            {!coverImgUrl.valid && <span class="spanError">{coverImgUrl.error}</span>}
-                            <br/>
-                            <br/>
+                                <label class="lableStle">coverImgUrl：</label>
+                                <input
+                                    class="input"
+                                    type="text"
+                                    value={coverImgUrl.value}
+                                    onChange={(e) => this.handleValueChange(inputTypeName.coverImgUrl, e.target.value)}
+                                />
+                                {!coverImgUrl.valid && <span class="spanError">{coverImgUrl.error}</span>}
+                                <br/>
+                                <br/>
 
-                            <label class="lableStle">content：</label>
+                                <label class="lableStle">content：</label>
                             <textarea
                                 class="textarea"
                                 type="text"
                                 value={content.value}
                                 onChange={(e) => this.handleValueChange(inputTypeName.content, e.target.value)}
                             />
-                            {!content.valid && <span class="spanError">{content.error}</span>}
-                            <br/>
-                            <br/>
+                                {!content.valid && <span class="spanError">{content.error}</span>}
+                                <br/>
+                                <br/>
 
-                            <label class="lableStle">author：</label>
-                            <input
-                                class="input"
-                                type="text"
-                                value={author.value}
-                                onChange={(e) => this.handleValueChange(inputTypeName.author, e.target.value)}
-                            />
-                            {!author.valid && <span class="spanError">{author.error}</span>}
-                            <br/>
-                            <br/>
+                                <label class="lableStle">author：</label>
+                                <input
+                                    class="input"
+                                    type="text"
+                                    value={author.value}
+                                    onChange={(e) => this.handleValueChange(inputTypeName.author, e.target.value)}
+                                />
+                                {!author.valid && <span class="spanError">{author.error}</span>}
+                                <br/>
+                                <br/>
 
-                            <label class="lableStle">fromUrl：</label>
-                            <input
-                                class="input"
-                                type="text"
-                                value={fromUrl.value}
-                                onChange={(e) => this.handleValueChange(inputTypeName.fromUrl, e.target.value)}
-                            />
-                            {!fromUrl.valid && <span class="spanError">{fromUrl.error}</span>}
-                            <br/>
-                            <br/>
+                                <label class="lableStle">fromUrl：</label>
+                                <input
+                                    class="input"
+                                    type="text"
+                                    value={fromUrl.value}
+                                    onChange={(e) => this.handleValueChange(inputTypeName.fromUrl, e.target.value)}
+                                />
+                                {!fromUrl.valid && <span class="spanError">{fromUrl.error}</span>}
+                                <br/>
+                                <br/>
 
-                            <input class="submit" type="submit" value="提交"/>
-                        </form>
-                    </div>
+                                <input class="submit" type="submit" value="提交"/>
+                            </form>
 
 
-                </Dialog>
+                        </div>
+
+
+                    </Dialog>
+
+                </div>
+
+
+                <div>
+                    {progressDialogUI}
+                </div>
+
                 <Snackbar
                     open={this.state.snackBarShow}
                     message="请填写正确的信息后重试"
